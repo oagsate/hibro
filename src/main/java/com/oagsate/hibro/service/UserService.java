@@ -4,4 +4,6 @@ import com.oagsate.hibro.pojo.User;
 
 public interface UserService {
     public User get(int id);
+
+    public void create(User user);
 }

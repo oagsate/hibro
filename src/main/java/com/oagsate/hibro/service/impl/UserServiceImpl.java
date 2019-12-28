@@ -15,4 +15,9 @@ public class UserServiceImpl implements UserService {
     public User get(int id) {
         return userMapper.get(id);
     }
+
+    @Override
+    public void create(User user) {
+        userMapper.create(user);
+    }
 }

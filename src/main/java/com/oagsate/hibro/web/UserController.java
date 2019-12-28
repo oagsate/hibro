@@ -2,10 +2,9 @@ package com.oagsate.hibro.web;
 
 import com.oagsate.hibro.pojo.User;
 import com.oagsate.hibro.service.UserService;
+import com.oagsate.hibro.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -16,5 +15,12 @@ public class UserController {
     public User get(@PathVariable("id") int id) throws Exception{
         User user=userService.get(id);
         return user;
+    }
+
+    @PostMapping("/api/user")
+    public JsonResult create(@RequestBody User user) throws Exception{
+        userService.create(user);
+        JsonResult result=new JsonResult();
+        return result;
     }
 }
