@@ -5,25 +5,43 @@ import com.oagsate.hibro.pojo.User;
 import com.oagsate.hibro.service.ThoughtService;
 import com.oagsate.hibro.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class ThoughtController {
     @Autowired
     ThoughtService thoughtService;
 
-    @PostMapping
-    public JsonResult create(@RequestBody Thought thought, HttpServletRequest request){
-        HttpSession session=request.getSession();
+    @PostMapping("/api/thought")
+    public JsonResult create(@RequestBody Thought thought, HttpSession session) throws Exception{
         User user=(User) session.getAttribute("user");
         int uid=user.getId();
         thought.setUid(uid);
         thoughtService.create(thought);
+        return new JsonResult();
+    }
+
+    @GetMapping("/api/thought/{uid}")
+    public JsonResult retrieve(@PathVariable("uid") int uid) throws Exception{
+        List<Thought> thoughtList=thoughtService.retrieve(uid);
+        return new JsonResult(thoughtList);
+    }
+
+    @DeleteMapping("/api/thought/{id}")
+    public JsonResult delete(@PathVariable("id") int id,HttpSession session) throws Exception{
+        User user=(User) session.getAttribute("user");
+        int uid=user.getId();
+        Thought thought =new Thought();
+        thought.setId(id);
+        thought.setUid(uid);
+        int deleteCount = thoughtService.delete(thought);
+        if(1!=deleteCount){
+            return new JsonResult("删除失败",3);
+        }
         return new JsonResult();
     }
 }
