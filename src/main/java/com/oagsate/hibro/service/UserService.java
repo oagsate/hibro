@@ -6,4 +6,8 @@ public interface UserService {
     public User get(int id);
 
     public void create(User user);
+
+    public User login(User user);
+
+    public void update(User user);
 }

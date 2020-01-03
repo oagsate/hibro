@@ -4,10 +4,46 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oagsate.hibro.mapper.UserMapper">
-    <insert id="create" parameterType="User" >
+    <insert id="create" parameterType="User">
         insert into user ( name,password,email ) values (#{name},#{password},#{email})
     </insert>
     <select id="get" parameterType="_int" resultType="User">
-        select * from   user  where id= #{id}
+        select * from user where id= #{id}
     </select>
+    <select id="login" parameterType="User" resultType="User">
+        select * from user where name= #{name} and password= #{password}
+    </select>
+    <update id="update" parameterType="User">
+        update user
+        <set>
+            <if test="null!=lastTime">
+                lastTime=#{lastTime},
+            </if>
+            <if test="null!=status">
+                status=#{status},
+            </if>
+            <if test="null!=orientation">
+                orientation=#{orientation},
+            </if>
+            <if test="null!=height">
+                height=#{height},
+            </if>
+            <if test="null!=weight">
+                weight=#{weight},
+            </if>
+            <if test="null!=cStatus">
+                cStatus=#{cStatus},
+            </if>
+            <if test="null!=education">
+                education=#{education},
+            </if>
+            <if test="null!=location">
+                location=#{location},
+            </if>
+            <if test="null!=description">
+                description=#{description},
+            </if>
+        </set>
+        WHERE id=#{id}
+    </update>
 </mapper>
