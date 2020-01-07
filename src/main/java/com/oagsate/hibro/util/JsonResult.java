@@ -8,8 +8,8 @@ import java.io.Serializable;
  */
 public class JsonResult implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static final int SUCCESS = 0;
-    public static final int ERROR = 1;
+    public static final int SUCCESS = 1;
+    public static final int ERROR = 0;
 
     /**
      * 返回是否成功的状态, 1表示成功, 0表示失败
