@@ -19,7 +19,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         String uri = httpServletRequest.getRequestURI();
         String method = httpServletRequest.getMethod();
         HttpSession session = httpServletRequest.getSession();
-        if ("/api/user".equals(uri) && "POST".equals(method) || "/api/login".equals(uri)) {
+        if ("/api/register".equals(uri) && "POST".equals(method) || "/api/login".equals(uri)) {
             return true;
         }
         User user = (User) session.getAttribute("user");

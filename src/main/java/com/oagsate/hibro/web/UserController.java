@@ -26,6 +26,25 @@ public class UserController {
         return result;
     }
 
+    @PostMapping("/api/register")
+    public JsonResult register(@RequestBody User user, HttpSession session) throws Exception{
+        JsonResult result=new JsonResult();
+        try {
+            userService.create(user);
+            User u=userService.login(user);
+            if(null==u){
+                return new JsonResult("账号或密码错误",2);
+            }
+            session.setAttribute("user",u);
+            result.setData(u);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setState(0);
+            result.setErrmsg("用户名或邮箱已存在");
+        }
+        return result;
+    }
+
     @PostMapping("/api/login")
     public JsonResult login(@RequestBody User user, HttpSession session) throws Exception{
         User u=userService.login(user);
