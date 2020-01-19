@@ -5,7 +5,7 @@
 
 <mapper namespace="com.oagsate.hibro.mapper.UserMapper">
     <insert id="create" parameterType="User">
-        insert into user ( name,password,email ) values (#{name},#{password},#{email})
+        insert into user ( name,password,email,createTime ) values (#{name},#{password},#{email},#{createTime})
     </insert>
     <select id="get" parameterType="_int" resultType="User">
         select * from user where id= #{id}

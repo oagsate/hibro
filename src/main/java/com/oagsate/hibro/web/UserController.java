@@ -19,6 +19,12 @@ public class UserController {
         return user;
     }
 
+    @GetMapping("/api/user/self")
+    public JsonResult getSelf(HttpSession session) throws Exception{
+        User user = (User) session.getAttribute("user");
+        return new JsonResult(user);
+    }
+
     @PostMapping("/api/user")
     public JsonResult create(@RequestBody User user) throws Exception{
         userService.create(user);
@@ -29,6 +35,8 @@ public class UserController {
     @PostMapping("/api/register")
     public JsonResult register(@RequestBody User user, HttpSession session) throws Exception{
         JsonResult result=new JsonResult();
+        long createTime=(long) Math.floor(System.currentTimeMillis()/1000);
+        user.setCreateTime(createTime);
         try {
             userService.create(user);
             User u=userService.login(user);
