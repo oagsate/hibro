@@ -5,8 +5,11 @@ import com.oagsate.hibro.service.UserService;
 import com.oagsate.hibro.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 
 @RestController
 public class UserController {
@@ -67,5 +70,21 @@ public class UserController {
     public JsonResult update(@RequestBody User user) throws Exception{
         userService.update(user);
         return new JsonResult();
+    }
+
+    @PostMapping("/api/user/uploadAvatar")
+    public JsonResult uploadAvatar(HttpServletRequest req, @RequestParam("file") MultipartFile file) throws Exception{
+        JsonResult result=new JsonResult();
+        try {
+            String fileName = System.currentTimeMillis()+file.getOriginalFilename();
+            String destFileName=req.getServletContext().getRealPath("")+"uploaded"+ File.separator+fileName;
+            File destFile = new File(destFileName);
+            destFile.getParentFile().mkdirs();
+            file.transferTo(destFile);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setState(0);
+        }
+        return result;
     }
 }
