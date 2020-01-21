@@ -4,14 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oagsate.hibro.mapper.UserMapper">
+    <resultMap type="java.util.HashMap" id="userResultMap">
+    </resultMap>
     <insert id="create" parameterType="User">
         insert into user ( name,password,email,createTime ) values (#{name},#{password},#{email},#{createTime})
     </insert>
-    <select id="get" parameterType="_int" resultType="User">
+    <select id="get" parameterType="_int" resultMap="userResultMap">
         select * from user where id= #{id}
     </select>
-    <select id="login" parameterType="User" resultType="User">
-        select * from user where name= #{name} and password= #{password}
+    <select id="login" parameterType="User" resultMap="userResultMap">
+        select id,name,createTime,lastTime,gender,birthday,status,orientation,height,weight,cStatus,education,location,description,email from user where name= #{name} and password= #{password}
     </select>
     <update id="update" parameterType="User">
         update user

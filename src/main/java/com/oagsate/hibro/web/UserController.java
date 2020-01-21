@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.util.HashMap;
 
 @RestController
 public class UserController {
@@ -17,14 +18,14 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/api/user/{id}")
-    public User get(@PathVariable("id") int id) throws Exception{
-        User user=userService.get(id);
+    public HashMap get(@PathVariable("id") int id) throws Exception{
+        HashMap user=userService.get(id);
         return user;
     }
 
     @GetMapping("/api/user/self")
     public JsonResult getSelf(HttpSession session) throws Exception{
-        User user = (User) session.getAttribute("user");
+        HashMap user = (HashMap) session.getAttribute("user");
         return new JsonResult(user);
     }
 
@@ -42,7 +43,7 @@ public class UserController {
         user.setCreateTime(createTime);
         try {
             userService.create(user);
-            User u=userService.login(user);
+            HashMap u=userService.login(user);
             if(null==u){
                 return new JsonResult("账号或密码错误",2);
             }
@@ -58,7 +59,7 @@ public class UserController {
 
     @PostMapping("/api/login")
     public JsonResult login(@RequestBody User user, HttpSession session) throws Exception{
-        User u=userService.login(user);
+        HashMap u=userService.login(user);
         if(null==u){
             return new JsonResult("账号或密码错误",2);
         }

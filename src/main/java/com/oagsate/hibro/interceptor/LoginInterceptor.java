@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 public class LoginInterceptor implements HandlerInterceptor {
 
@@ -22,7 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if ("/api/register".equals(uri) && "POST".equals(method) || "/api/login".equals(uri)) {
             return true;
         }
-        User user = (User) session.getAttribute("user");
+        HashMap user = (HashMap) session.getAttribute("user");
         if (user == null) {
             httpServletResponse.setStatus(200);
             JsonResult result = new JsonResult("用户未登录", 1);

@@ -6,13 +6,15 @@ import com.oagsate.hibro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 
     @Override
-    public User get(int id) {
+    public HashMap get(int id) {
         return userMapper.get(id);
     }
 
@@ -22,7 +24,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(User user) {
+    public HashMap login(User user) {
         return userMapper.login(user);
     }
 
