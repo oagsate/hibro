@@ -15,11 +15,17 @@
     <select id="login" parameterType="User" resultMap="userResultMap">
         select id,name,createTime,lastTime,gender,birthday,status,orientation,height,weight,cStatus,education,location,description,email from user where name= #{name} and password= #{password}
     </select>
-    <update id="update" parameterType="User">
+    <update id="update" parameterType="HashMap">
         update user
         <set>
             <if test="null!=lastTime">
                 lastTime=#{lastTime},
+            </if>
+            <if test="null!=birthday">
+                birthday=#{birthday},
+            </if>
+            <if test="null!=gender">
+                gender=#{gender},
             </if>
             <if test="null!=status">
                 status=#{status},
@@ -44,6 +50,9 @@
             </if>
             <if test="null!=description">
                 description=#{description},
+            </if>
+            <if test="null!=avatar">
+                avatar=#{avatar},
             </if>
         </set>
         WHERE id=#{id}

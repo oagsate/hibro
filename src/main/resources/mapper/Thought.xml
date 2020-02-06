@@ -4,11 +4,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.oagsate.hibro.mapper.ThoughtMapper">
+    <resultMap type="java.util.HashMap" id="thoughtResultMap">
+    </resultMap>
     <insert id="create" parameterType="Thought">
         INSERT INTO thought (createTime, content, uid) VALUES (#{createTime},#{content},#{uid})
     </insert>
-    <select id="retrieve" parameterType="_int" resultType="Thought">
-        SELECT * FROM thought where uid=#{uid}
+    <select id="retrieve" resultMap="thoughtResultMap">
+        SELECT thought.id, thought.createTime, thought.content, thought.uid, user.name FROM thought left join user on thought.uid = user.id
+    </select>
+    <select id="retrieveByUid" parameterType="_int" resultMap="thoughtResultMap">
+        SELECT thought.id, thought.createTime, thought.content, thought.uid, user.name FROM thought left join user on thought.uid = user.id where thought.uid=#{uid}
     </select>
     <delete id="delete" parameterType="Thought">
         DELETE FROM thought where id=#{id} and uid=#{uid}

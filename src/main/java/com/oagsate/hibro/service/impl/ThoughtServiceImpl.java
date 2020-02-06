@@ -6,6 +6,7 @@ import com.oagsate.hibro.service.ThoughtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -19,8 +20,13 @@ public class ThoughtServiceImpl implements ThoughtService {
     }
 
     @Override
-    public List<Thought> retrieve(int uid) {
-        return thoughtMapper.retrieve(uid);
+    public List<HashMap> retrieveByUid(int uid) {
+        return thoughtMapper.retrieveByUid(uid);
+    }
+
+    @Override
+    public List<HashMap> retrieve() {
+        return thoughtMapper.retrieve();
     }
 
     @Override

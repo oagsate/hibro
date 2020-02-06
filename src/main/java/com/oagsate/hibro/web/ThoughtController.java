@@ -1,5 +1,7 @@
 package com.oagsate.hibro.web;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.oagsate.hibro.pojo.Thought;
 import com.oagsate.hibro.pojo.User;
 import com.oagsate.hibro.service.ThoughtService;
@@ -28,24 +30,30 @@ public class ThoughtController {
         return new JsonResult();
     }
 
-    @GetMapping("/api/thought/{uid}")
-    public JsonResult retrieve(@PathVariable("uid") int uid) throws Exception{
-        List<Thought> thoughtList=thoughtService.retrieve(uid);
-        return new JsonResult(thoughtList);
+    @GetMapping("/api/thought")
+    public JsonResult retrieve(@RequestParam(value = "start") int start,@RequestParam(value = "size") int size) throws Exception{
+        PageHelper.startPage(start, size,"thought.id desc");
+        List<HashMap> thoughtList=thoughtService.retrieve();
+        PageInfo<HashMap> page = new PageInfo<>(thoughtList);
+        return new JsonResult(page);
     }
 
-    @GetMapping("/api/thought/self")
-    public JsonResult retrieveSelf(HttpSession session) throws Exception{
-        HashMap user=(HashMap) session.getAttribute("user");
-        int uid=(int) user.get("id");
-        List<Thought> thoughtList=thoughtService.retrieve(uid);
-        return new JsonResult(thoughtList);
+    @GetMapping("/api/thought/{uid}")
+    public JsonResult retrieveSelf(@PathVariable("uid") int uid,@RequestParam(value = "start") int start,@RequestParam(value = "size") int size,HttpSession session) throws Exception{
+        if(-1==uid){
+            HashMap user=(HashMap) session.getAttribute("user");
+            uid=(int) user.get("id");
+        }
+        PageHelper.startPage(start, size,"thought.id desc");
+        List<HashMap> thoughtList=thoughtService.retrieveByUid(uid);
+        PageInfo<HashMap> page = new PageInfo<>(thoughtList);
+        return new JsonResult(page);
     }
 
     @DeleteMapping("/api/thought/{id}")
     public JsonResult delete(@PathVariable("id") int id,HttpSession session) throws Exception{
-        User user=(User) session.getAttribute("user");
-        int uid=user.getId();
+        HashMap user=(HashMap) session.getAttribute("user");
+        int uid=(int) user.get("id");
         Thought thought =new Thought();
         thought.setId(id);
         thought.setUid(uid);

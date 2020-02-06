@@ -13,5 +13,5 @@ public interface UserMapper {
 
     public HashMap login(User user);
 
-    public void update(User user);
+    public void update(HashMap user);
 }

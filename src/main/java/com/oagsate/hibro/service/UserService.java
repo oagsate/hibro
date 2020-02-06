@@ -11,5 +11,5 @@ public interface UserService {
 
     public HashMap login(User user);
 
-    public void update(User user);
+    public void update(HashMap user);
 }
