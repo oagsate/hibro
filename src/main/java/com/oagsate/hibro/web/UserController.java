@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping("/api/user/uploadAvatar")
-    public JsonResult uploadAvatar(HttpServletRequest req, @RequestParam("file") MultipartFile file,HttpSession session) throws Exception{
+    public JsonResult uploadAvatar(@RequestParam("file") MultipartFile file,HttpSession session) throws Exception{
         JsonResult result=new JsonResult();
         HashMap current=(HashMap) session.getAttribute("user");
         int id=(int) current.get("id");

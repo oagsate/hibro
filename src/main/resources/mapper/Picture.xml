@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.oagsate.hibro.mapper.PictureMapper">
+    <resultMap type="java.util.HashMap" id="pictureResultMap">
+    </resultMap>
+    <insert id="create" parameterType="HashMap">
+        INSERT INTO picture (createTime, uri, name, uid) VALUES (#{createTime},#{uri},#{name},#{uid})
+    </insert>
+    <select id="retrieveByUid" parameterType="_int" resultMap="pictureResultMap">
+        SELECT picture.id, picture.createTime, picture.uri, picture.name, user.name as username,picture.uid FROM picture left join user on picture.uid = user.id where picture.uid=#{uid}
+    </select>
+    <select id="retrieve" parameterType="_int" resultMap="pictureResultMap">
+        SELECT picture.id, picture.createTime, picture.uri, picture.name, user.name as username,picture.uid FROM picture left join user on picture.uid = user.id
+    </select>
+</mapper>

@@ -39,7 +39,7 @@ public class ThoughtController {
     }
 
     @GetMapping("/api/thought/{uid}")
-    public JsonResult retrieveSelf(@PathVariable("uid") int uid,@RequestParam(value = "start") int start,@RequestParam(value = "size") int size,HttpSession session) throws Exception{
+    public JsonResult retrieveByUid(@PathVariable("uid") int uid,@RequestParam(value = "start") int start,@RequestParam(value = "size") int size,HttpSession session) throws Exception{
         if(-1==uid){
             HashMap user=(HashMap) session.getAttribute("user");
             uid=(int) user.get("id");
