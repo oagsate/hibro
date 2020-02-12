@@ -11,4 +11,5 @@ public interface PictureMapper {
     public void create(HashMap picture);
     public List<HashMap> retrieveByUid(int uid);
     public List<HashMap> retrieve();
+    public int delete(HashMap picture);
 }

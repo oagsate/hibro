@@ -30,4 +30,9 @@ public class PictureServiceImpl implements PictureService {
     public List<HashMap> retrieve() {
         return  pictureMapper.retrieve();
     }
+
+    @Override
+    public int delete(HashMap picture) {
+        return pictureMapper.delete(picture);
+    }
 }

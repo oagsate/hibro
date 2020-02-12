@@ -15,4 +15,7 @@
     <select id="retrieve" parameterType="_int" resultMap="pictureResultMap">
         SELECT picture.id, picture.createTime, picture.uri, picture.name, user.name as username,picture.uid FROM picture left join user on picture.uid = user.id
     </select>
+    <delete id="delete" parameterType="HashMap">
+        DELETE FROM picture where id=#{id} and uid=#{uid}
+    </delete>
 </mapper>

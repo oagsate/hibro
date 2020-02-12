@@ -68,4 +68,18 @@ public class PictureController {
         PageInfo<HashMap> page = new PageInfo<>(list);
         return new JsonResult(page);
     }
+
+    @DeleteMapping("/api/picture/{id}")
+    public JsonResult delete(@PathVariable("id") int id,HttpSession session) throws Exception{
+        HashMap user=(HashMap) session.getAttribute("user");
+        int uid=(int) user.get("id");
+        HashMap pic =new HashMap();
+        pic.put("id",id);
+        pic.put("uid",uid);
+        int deleteCount = pictureService.delete(pic);
+        if(1!=deleteCount){
+            return new JsonResult("删除失败",3);
+        }
+        return new JsonResult();
+    }
 }
